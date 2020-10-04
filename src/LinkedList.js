@@ -1,4 +1,6 @@
-
+/**
+ * A simple linked list.  This class has methods for push/pop, enqueue/dequeue, and peek.
+ */
 class LinkedList {
     constructor() {
         this.head = new ListNode();
