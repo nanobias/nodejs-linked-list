@@ -2,12 +2,21 @@
  * A simple linked list.  This class has methods for push/pop, enqueue/dequeue, and peek.
  */
 class LinkedList {
-    constructor() {
-        this.head = new ListNode();
-        this.tail = new ListNode();
-        this.length = 0;
+    #head;
+    #tail;
+    #_length;
 
-        ListNode.link(this.head, this.tail);
+    constructor() {
+        this.#head = new ListNode();
+        this.#tail = new ListNode();
+        this.#_length = 0;
+
+        Object.defineProperty(this, "length", {
+            get: () => this.#_length,
+            set: () => {throw new Error();}
+        });
+
+        ListNode.link(this.#head, this.#tail);
     }
 
     /**
@@ -15,8 +24,8 @@ class LinkedList {
      * @param value
      */
     push(value) {
-        ListNode.link(this.tail.prev, new ListNode(value));
-        this.length ++;
+        ListNode.link(this.#tail.prev, new ListNode(value));
+        this.#_length ++;
     }
 
     /**
@@ -24,8 +33,8 @@ class LinkedList {
      * @param value @type
      */
     enqueue(value) {
-        ListNode.link(this.head, new ListNode(value));
-        this.length ++;
+        ListNode.link(this.#head, new ListNode(value));
+        this.#_length ++;
     }
 
     /**
@@ -33,14 +42,14 @@ class LinkedList {
      * @returns {*} item removed from the list
      */
     pop() {
-        let result_node = this.tail.prev;
+        let result_node = this.#tail.prev;
 
-        if (result_node.id === this.head.id) {
+        if (result_node.id === this.#head.id) {
             throw new Error("Nothing to pop");
         }
 
         ListNode.unlink(result_node);
-        this.length --;
+        this.#_length --;
 
         return result_node.value;
     }
@@ -58,9 +67,9 @@ class LinkedList {
      * @returns {*} last value in the list.
      */
     peek() {
-        let result_node = this.tail.prev;
+        let result_node = this.#tail.prev;
 
-        if (result_node.id === this.head.id) {
+        if (result_node.id === this.#head.id) {
             throw new Error("Nothing to pop");
         }
 
@@ -69,14 +78,14 @@ class LinkedList {
 
 
     [Symbol.iterator]() {
-        let nextNode = this.head;
+        let nextNode = this.#head;
 
         return {
             next() {
                 let result = {};
 
                 nextNode = nextNode.next;
-                result.done = nextNode.id !== this.tail.id;
+                result.done = nextNode.id !== this.#tail.id;
 
                 if (!result.done) {
                     result.value = nextNode.value;
