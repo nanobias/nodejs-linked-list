@@ -66,6 +66,16 @@ class LinkedList {
 
         return result_node.value;
     }
+
+    *[Symbol.iterator]() {
+        let next = this.head.next();
+
+        while (next.id !== this.tail.id) {
+            let value = next.value;
+            next = next.next;
+            yield value;
+        }
+    }
 }
 
 class ListNode {
