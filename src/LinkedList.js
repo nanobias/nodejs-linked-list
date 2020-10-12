@@ -67,13 +67,23 @@ class LinkedList {
         return result_node.value;
     }
 
-    *[Symbol.iterator]() {
-        let next = this.head.next();
 
-        while (next.id !== this.tail.id) {
-            let value = next.value;
-            next = next.next;
-            yield value;
+    [Symbol.iterator]() {
+        let nextNode = this.head;
+
+        return {
+            next() {
+                let result = {};
+
+                nextNode = nextNode.next;
+                result.done = nextNode.id !== this.tail.id;
+
+                if (!result.done) {
+                    result.value = nextNode.value;
+                }
+
+                return result;
+            }
         }
     }
 }
