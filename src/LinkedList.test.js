@@ -201,6 +201,7 @@ describe("Test LinkedList module", () => {
     });
 
     describe("LinkedList iterator", () => {
+        // @type {LinkedList}
         let ll = null;
 
         beforeEach(() => {
@@ -224,6 +225,23 @@ describe("Test LinkedList module", () => {
                 i++;
             }
         });
+
+        it("should work with list spread syntax", () => {
+            let values = [0, 1, 2, 3, 4, 5];
+
+            values.forEach((value) => {
+                ll.push(value + 2);
+            });
+
+            let result = [...ll];
+
+            assert(Array.isArray(result));
+            assert.strictEqual(Array.length, values.length);
+
+            for(let i = 0; i < values.length; i++) {
+                assert.strictEqual(result[i], i+2);
+            }
+        })
     });
 });
 
