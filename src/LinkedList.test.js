@@ -159,5 +159,31 @@ describe("Test LinkedList module", () => {
             assert.strictEqual(n2.value, v2);
         })
     });
+
+    describe("LinkedList iterator", () => {
+        let ll = null;
+
+        beforeEach(() => {
+            ll = new LinkedList();
+        })
+
+        afterEach(() => {
+            ll = null;
+        })
+
+        it("should work with for ... of syntax", () => {
+            let values = [0, 1, 2, 3, 4, 5];
+
+            values.forEach((value) => {
+                ll.push(value + 2);
+            });
+
+            let i = 0;
+            for (let value in ll) {
+                assert.strictEqual(value, i+2);
+                i++;
+            }
+        })
+    })
 })
 
